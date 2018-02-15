@@ -2,12 +2,15 @@
 <html>
 <head>
     <title>Bitcoin Price Publisher</title>
-    <script src=""></script>
 </head>
 
 <body>
+    <!-- Include PubNub library -->
+    <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.18.0.min.js"></script>
+    
     <script type="text/javascript">
                 
+    // Instantiate PubNub
         var pubnub = new PubNub({
             publishKey: 'pub-c-d97ea338-6ccf-4bfe-8149-32257b7749b2',
             subscribeKey: 'sub-c-5fa09a6c-128e-11e8-a78c-ded3dc92678b'
