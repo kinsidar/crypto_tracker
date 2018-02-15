@@ -1,31 +1,46 @@
-var pubnub = new PubNub({
-    publishKey: 'pub-c-d97ea338-6ccf-4bfe-8149-32257b7749b2',
-    subscribeKey: 'sub-c-5fa09a6c-128e-11e8-a78c-ded3dc92678b'
-});
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bitcoin Price Publisher</title>
+    <script src=""></script>
+</head>
 
-var xhr = new XMLHttpRequest();
+<body>
+    <script type="text/javascript">
+                
+        var pubnub = new PubNub({
+            publishKey: 'pub-c-d97ea338-6ccf-4bfe-8149-32257b7749b2',
+            subscribeKey: 'sub-c-5fa09a6c-128e-11e8-a78c-ded3dc92678b'
+        });
+
+        var xhr = new XMLHttpRequest();
 
 
-function processRequest(e) {
-    if (xhr.readyState == 4 &&  xhr.status == 200) {
-        var response = JSON.parse(xhr.responseText);
-            pubnub.publish({
-                channel: 'bitcoin-feed',
-                message: {
-                    eon: {
-                        'Bitcoin': response.BTC.USD.toFixed(2)
-                    }
-                }
-            });
-    }
-}
+        function processRequest(e) {
+            if (xhr.readyState == 4 &&  xhr.status == 200) {
+                var response = JSON.parse(xhr.responseText);
+                    pubnub.publish({
+                        channel: 'bitcoin-feed',
+                        message: {
+                            eon: {
+                                'Bitcoin': response.BTC.USD.toFixed(2)
+                            }
+                        }
+                    });
+            }
+        }
 
-function mainApp() {
-    setInterval(function() {
-        xhr.open('GET', 'https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC&tsyms=USD', true)
-            xhr.send();
-            xhr.onreadystatechange = processRequest;
-    }, 10000)
-};
+        function mainApp() {
+            setInterval(function() {
+                xhr.open('GET', 'https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC&tsyms=USD', true)
+                    xhr.send();
+                    xhr.onreadystatechange = processRequest;
+            }, 10000)
+        };
 
-mainApp();
+        mainApp();
+            
+    </script>
+
+</body>
+</html>
